@@ -1,6 +1,23 @@
-Flask==3.0.0
-pdfplumber==0.9.0
-langdetect==1.0.9
-flask-cors==3.0.10
-python-dotenv==1.0.1
-gunicorn==23.0.0
+blinker @ file:///Users/builder/cbouss/perseverance-python-buildout/croot/blinker_1699238202041/work
+cffi @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_7a9c7wyorr/croot/cffi_1714483157752/work
+charset-normalizer @ file:///croot/charset-normalizer_1721748349566/work
+click @ file:///Users/builder/cbouss/perseverance-python-buildout/croot/click_1699237822453/work
+cryptography @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_51oymkxnaj/croot/cryptography_1724940565328/work
+Flask @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_b6zka5i2cn/croot/flask_1716545886197/work
+Flask-Cors @ file:///tmp/build/80754af9/flask-cors_1609957731919/work
+gunicorn @ file:///Users/runner/miniforge3/conda-bld/gunicorn_1724955954112/work
+itsdangerous @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_00jdi1gu23/croot/itsdangerous_1716533346702/work
+Jinja2 @ file:///private/var/folders/k1/30mswbxs7r1g6zwn8y4fyt500000gp/T/abs_44yzu12j7f/croot/jinja2_1716993410427/work
+langdetect @ file:///home/conda/feedstock_root/build_artifacts/langdetect_1622407545956/work
+MarkupSafe @ file:///Users/builder/cbouss/perseverance-python-buildout/croot/markupsafe_1707339878470/work
+packaging @ file:///private/var/folders/k1/30mswbxs7r1g6zwn8y4fyt500000gp/T/abs_81ri4yfpjw/croot/packaging_1720101866878/work
+pdfminer.six @ file:///home/conda/feedstock_root/build_artifacts/pdfminer.six_1667675062575/work
+pdfplumber @ file:///home/conda/feedstock_root/build_artifacts/pdfplumber_1681441777867/work
+pillow @ file:///private/var/folders/k1/30mswbxs7r1g6zwn8y4fyt500000gp/T/abs_617xe_y58w/croot/pillow_1721059447446/work
+pycparser @ file:///tmp/build/80754af9/pycparser_1636541352034/work
+python-dotenv @ file:///home/conda/feedstock_root/build_artifacts/python-dotenv-split_1706018097647/work
+setuptools==72.1.0
+six @ file:///tmp/build/80754af9/six_1644875935023/work
+Wand @ file:///home/conda/feedstock_root/build_artifacts/wand_1661205278277/work
+Werkzeug @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_5bnbxlhunm/croot/werkzeug_1716533322814/work
+wheel==0.43.0
