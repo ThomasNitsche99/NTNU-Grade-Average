@@ -23,7 +23,6 @@ def require_api_key(func):
     return wrapper
 
 @app.route('/' , methods=['GET'])
-@require_api_key
 def hello_world():
     return jsonify("Greetings!")
 
