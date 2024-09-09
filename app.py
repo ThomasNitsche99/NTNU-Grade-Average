@@ -42,11 +42,25 @@ def process_pdf():
         # file.save(file_path)
         
         # Assuming YourClass is the main class doing the work in your script
-        processor = GradeCalculator(file, False)
-        result = processor.calculate()  # Modify according to your method name
+        try:
+            processor = GradeCalculator(file, False)
+            result = processor.calculate()  # Modify according to your method name
+            
+            return jsonify({"result": result}), 200
 
-        return jsonify({"result": result}), 200
-
+            
+        #catching value errors
+        except ValueError as e:
+            return jsonify({"error": str(e)}), 400
+        
+        #Catching index error (not a ntnu transcript of records)
+        except IndexError as e:
+            return jsonify({"error": str(e)}), 400
+        
+        #Catching all errors
+        except:
+            return jsonify({"error": "Something went wrong"}), 400
+        
     return jsonify({"error": "Invalid file type"}), 400
 
 

@@ -2,6 +2,13 @@ import pdfplumber
 import re
 import math
 from langdetect import detect
+import os
+
+def open_file_in_same_directory(file_name):
+   script_dir = os.path.dirname(os.path.abspath(__file__))
+   file_path = os.path.join(script_dir, file_name)
+   
+   return file_path
 
 
 class GradeCalculator:
@@ -16,7 +23,8 @@ class GradeCalculator:
             
         elif self.language == "no":
             self.setup_norwegian(use_passed_nonpassed)
-            
+        
+        #If unsopperted language detected
         else:
             raise ValueError("Unsupported language")
     
@@ -66,7 +74,7 @@ class GradeCalculator:
             
             lang = detect(all_text)
             return lang
-    
+       
     # ----------- Calculation ----------
     def grade_to_letter(self,grade):
         for key, value in self.grade_values.items():
@@ -86,6 +94,10 @@ class GradeCalculator:
             # Find the start and end of the required section
             start_index = all_text.find(f"{self.index_keyword_start}")
             end_index = all_text.find(f"{self.index_keyword_end}") 
+                        
+            #Raise exception if not right format
+            if (start_index < 0 or end_index<0):
+                raise IndexError("File not an NTNU transcript of records")
             
 
             #The relevant text
@@ -174,7 +186,7 @@ class GradeCalculator:
             print(f"Study points: {study_points}")
             
 
-# calculator = GradeCalculator("pdfs/karakterutskrift.pdf", False)
-# raw, ceil, letter, study_points = calculator.calculate()
-# calculator.result(raw, ceil, letter, study_points)
+calculator = GradeCalculator(open_file_in_same_directory("test.pdf"), False)
+raw, ceil, letter, study_points = calculator.calculate()
+calculator.result(raw, ceil, letter, study_points)
 
