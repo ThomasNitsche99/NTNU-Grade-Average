@@ -2,14 +2,6 @@ import pdfplumber
 import re
 import math
 from langdetect import detect
-import os
-
-def open_file_in_same_directory(file_name):
-   script_dir = os.path.dirname(os.path.abspath(__file__))
-   file_path = os.path.join(script_dir, file_name)
-   
-   return file_path
-
 
 class GradeCalculator:
     def __init__(self, pdf_file, use_passed_nonpassed:bool):
@@ -186,7 +178,7 @@ class GradeCalculator:
             print(f"Study points: {study_points}")
             
 
-calculator = GradeCalculator(open_file_in_same_directory("test.pdf"), False)
-raw, ceil, letter, study_points = calculator.calculate()
-calculator.result(raw, ceil, letter, study_points)
+# calculator = GradeCalculator(open_file_in_same_directory("test.pdf"), False)
+# raw, ceil, letter, study_points = calculator.calculate()
+# calculator.result(raw, ceil, letter, study_points)
 

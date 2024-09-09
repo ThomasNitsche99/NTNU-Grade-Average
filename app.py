@@ -1,14 +1,11 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-import os
 from grade_average import GradeCalculator # Adjust import based on your class name
 
 app = Flask(__name__)
 app.config.from_pyfile('settings.py')    
-CORS(app)
-
-#Setup cors to only allow requests from authorized website
-#TODO: 
+CORS(app) #TODO: configure cors
+ 
 
 #Intersection function for checking authorization
 def require_api_key(func):
@@ -38,10 +35,7 @@ def process_pdf():
         return jsonify({"error": "No selected file"}), 400
 
     if file and file.filename.endswith('.pdf'):
-        # file_path = os.path.join('/tmp', file.filename)
-        # file.save(file_path)
-        
-        # Assuming YourClass is the main class doing the work in your script
+
         try:
             processor = GradeCalculator(file, False)
             result = processor.calculate()  # Modify according to your method name
