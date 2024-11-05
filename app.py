@@ -1,8 +1,13 @@
 import streamlit as st
 from grade_average import GradeCalculator
 
+st.set_page_config(
+    page_title="NTNU Grade Point Average Calculator",
+    page_icon="🎓",
+)
+
 def main():
-    st.title("NTNU Grade Average")
+    st.title("NTNU Grade Point Average Calculator")
 
     # File uploader allows users to upload a PDF file
     uploaded_file = st.file_uploader("Upload a PDF file ", type="pdf", help="Upload a Transcript of Records from NTNU")
