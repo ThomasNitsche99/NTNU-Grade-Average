@@ -1,8 +1,5 @@
 import streamlit as st
-import pandas as pd
 from grade_average import GradeCalculator
-from time import sleep
-from components.footer import add_footer
 
 def main():
     st.title("NTNU Grade Average")
