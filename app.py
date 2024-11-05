@@ -1,62 +1,66 @@
-from flask import Flask, request, jsonify
-from flask_cors import CORS
-from grade_average import GradeCalculator # Adjust import based on your class name
+import streamlit as st
+import pandas as pd
+from grade_average import GradeCalculator
+from time import sleep
+from components.footer import add_footer
 
-app = Flask(__name__)
-app.config.from_pyfile('settings.py')    
-CORS(app) #TODO: configure cors
- 
+def main():
+    st.title("NTNU Grade Average")
 
-#Intersection function for checking authorization
-def require_api_key(func):
-    def wrapper(*args, **kwargs):
-        key = request.headers.get('x-api-key')
-        print(key)
-        if key and key == app.config.get('SECRET_KEY'):
-            return func(*args, **kwargs)
-        else:
-            return jsonify({"error": "Unauthorized"}), 401
-    wrapper.__name__ = func.__name__
-    return wrapper
+    # File uploader allows users to upload a PDF file
+    uploaded_file = st.file_uploader("Upload a PDF file ", type="pdf", help="Upload a Transcript of Records from NTNU")
 
-@app.route('/' , methods=['GET'])
-def hello_world():
-    return jsonify("Greetings!")
+    if uploaded_file is not None:
+        st.write("File uploaded successfully!")
 
-@app.route('/process-pdf', methods=['POST'])
-@require_api_key
-def process_pdf():
-    if 'file' not in request.files:
-        return jsonify({"error": "No file provided"}), 400
-
-    file = request.files['file']
-
-    if file.filename == '':
-        return jsonify({"error": "No selected file"}), 400
-
-    if file and file.filename.endswith('.pdf'):
-
-        try:
-            processor = GradeCalculator(file, False)
-            result = processor.calculate()  # Modify according to your method name
+        # Process the PDF file
+        with st.spinner('Processing...'):
+            # Replace this function with your actual processing logic
+            try:
+                calculator = GradeCalculator(uploaded_file, False)
+                results = calculator.calculate()
+            except Exception as err:
+                st.error(f"{err}", icon="🚨")
+                return
             
-            return jsonify({"result": result}), 200
+        st.success('Processing complete!', icon="🥳")
+    
+        st.write("**Results:**")
 
-            
-        #catching value errors
-        except ValueError as e:
-            return jsonify({"error": str(e)}), 400
-        
-        #Catching index error (not a ntnu transcript of records)
-        except IndexError as e:
-            return jsonify({"error": str(e)}), 400
-        
-        #Catching all errors
-        except:
-            return jsonify({"error": "Something went wrong"}), 400
-        
-    return jsonify({"error": "Invalid file type"}), 400
+        col1, col2 = st.columns(2)
 
+        with col1:
+                st.metric("Language", results.get('language', 'N/A').upper())
+                st.metric("Study Points", results.get('study_points', 'N/A'))
 
+        with col2:
+                st.metric("Grade Avg (Raw)", results.get('grade_average_raw', 'N/A'))
+                st.metric("Grade Avg (Rounded)", results.get('grade_average_ceil', 'N/A'))
+                st.metric("Grade Avg Letter", results.get('grade_average_ceil_letter', 'N/A'))
+                
+
+    def add_footer():
+        footer = """
+        <style>
+        .footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            # background-color: black;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+        </style>
+        <div class="footer">
+            Developed by Thomas with love ❤️
+        </div>
+        """
+        st.markdown(footer, unsafe_allow_html=True)
+    
+    add_footer()
+    
+    
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5001)
+    main()

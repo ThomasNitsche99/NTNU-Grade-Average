@@ -3,6 +3,7 @@ import re
 import math
 from langdetect import detect
 
+
 class GradeCalculator:
     def __init__(self, pdf_file, use_passed_nonpassed:bool):
         
@@ -15,8 +16,7 @@ class GradeCalculator:
             
         elif self.language == "no":
             self.setup_norwegian(use_passed_nonpassed)
-        
-        #If unsopperted language detected
+            
         else:
             raise ValueError("Unsupported language")
     
@@ -66,7 +66,7 @@ class GradeCalculator:
             
             lang = detect(all_text)
             return lang
-       
+    
     # ----------- Calculation ----------
     def grade_to_letter(self,grade):
         for key, value in self.grade_values.items():
@@ -86,10 +86,6 @@ class GradeCalculator:
             # Find the start and end of the required section
             start_index = all_text.find(f"{self.index_keyword_start}")
             end_index = all_text.find(f"{self.index_keyword_end}") 
-                        
-            #Raise exception if not right format
-            if (start_index < 0 or end_index<0):
-                raise IndexError("File not an NTNU transcript of records")
             
 
             #The relevant text
@@ -148,19 +144,11 @@ class GradeCalculator:
 
         grade_average_ceil = math.ceil(grade_average_raw)
         grade_average_ceil_letter = self.grade_to_letter(grade_average_ceil)
-        
-        result = {
-            "language": self.language,
-            "grade_average_raw": grade_average_raw, 
-            "grade_average_ceil": grade_average_ceil, 
-            "grade_average_ceil_letter": grade_average_ceil_letter, 
-            "study_points": self.grades_sum
-        }
 
-        return result
+        return grade_average_raw, grade_average_ceil, grade_average_ceil_letter, self.grades_sum
  
     def calculate(self):
-        print(f"PDF language detected: {self.language.upper()} \n")
+        print(f"PDF language detected: {self.language} \n")
         text = self.extract_text()
         self.process_text(text)
         return self.calculate_grade_average()
@@ -178,7 +166,7 @@ class GradeCalculator:
             print(f"Study points: {study_points}")
             
 
-# calculator = GradeCalculator(open_file_in_same_directory("test.pdf"), False)
-# raw, ceil, letter, study_points = calculator.calculate()
-# calculator.result(raw, ceil, letter, study_points)
+calculator = GradeCalculator("pdfs/karakterutskrift.pdf", False)
+raw, ceil, letter, study_points = calculator.calculate()
+calculator.result(raw, ceil, letter, study_points)
 
